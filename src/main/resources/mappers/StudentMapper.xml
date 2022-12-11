@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pan.dao.StudentMapper">
+    <resultMap id="studentMap" type="com.pan.pojo.Student">
+        <id column="id" property="id"/>
+        <result column="sno" property="sno"/>
+        <result column="name" property="name"/>
+        <result column="card_id" property="cardId"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="profession" property="profession"/>
+        <result column="class_id" property="classId"/>
+        <result column="college_id" property="collegeId"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <select id="querystudent" resultMap="studentMap">
+        SELECT id,sno,name,sex,age,card_id FROM student
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="sno!=null and sno!=''">
+                and sno like concat('%',#{sno},'%')
+            </if>
+            <if test="cardId!=null and cardId!=''">
+                and card_id like concat('%',#{cardId},'%')
+            </if>
+        </where>
+    </select>
+    <select id="queryStuentBySno" resultMap="studentMap">
+        SELECT *  FROM student WHERE sno=#{sno}
+    </select>
+    <delete id="deleteById" >
+        DELETE FROM student WHERE  id=#{id}
+    </delete>
+</mapper>
